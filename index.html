@@ -255,6 +255,18 @@ const BOOKINGS = [
   {k:'Flight home (EK313 + EK147)', v:'Tokyo Haneda → Dubai → Amsterdam', sub:'Departs Haneda Wed 28 Oct · arrives Amsterdam Thu 29 Oct · ref: JBYDQB · exact times TBC'},
 ];
 
+const PHONES = [
+  {k:'Police', v:'110', tel:'110', sub:'Nationwide — free, works from any phone even without a SIM'},
+  {k:'Fire & Ambulance', v:'119', tel:'119', sub:'Nationwide — free, works from any phone even without a SIM'},
+  {k:'Coast Guard', v:'118', tel:'118', sub:'Nationwide — relevant near the Miyajima ferry & Lake Ashi boat'},
+  {k:'Japan Visitor Hotline (JNTO)', v:'050-3816-2787', tel:'+815038162787', sub:'24/7 · English/Chinese/Korean · good first call for emergencies or general tourist help'},
+  {k:'Japan Helpline', v:'0570-000-911', tel:'+81570000911', sub:"24/7 multilingual relay — call this if you can't communicate in Japanese on 110/119"},
+  {k:'Netherlands Embassy, Tokyo', v:'+81 3 5776 5400', tel:'+81357765400', sub:'24/7 consular emergency line for Dutch citizens in distress'},
+  {k:'Netherlands Consulate-General, Osaka', v:'+81 6 6484 6000', tel:'+81664846000', sub:'No consular section — for passport/visa/emergencies contact the Tokyo embassy'},
+  {k:'Tokyo Medical Info (Himawari)', v:'03-5285-8181', tel:'+81352858181', sub:'Daily 9:00–20:00 · English/Chinese/Korean/Thai/Spanish · finds English-speaking doctors & hospitals in Tokyo'},
+  {k:'Japan Poison Information Center', v:'072-727-2499', tel:'+81727272499', sub:'24/7 nationwide line — worth having saved with a baby along'},
+];
+
 const WX = [
   {region:'Tokyo', temp:'18–23°', cond:'mild, some rain'},
   {region:'Nikko', temp:'10–18°', cond:'cool, mountain'},
@@ -404,6 +416,9 @@ const DAYS = [
 
 /* ---------- INFO page content ---------- */
 const INFO_HTML = `
+<h2 class="section-title">Emergency & useful numbers</h2>
+<p style="font-size:13px;color:var(--ink-soft);line-height:1.5;margin:0 0 12px 0;">Police and ambulance are the same number everywhere in Japan — Tokyo, Nikko, Hakone, Kyoto, Kumano, Koyasan, Osaka, Himeji, Hiroshima and Miyajima all use these, no local lookup needed. Tap a number to call.</p>
+${PHONES.map(p => `<div class="card"><div class="k">${p.k}</div><div class="v"><a href="tel:${p.tel}">${p.v}</a></div><div class="sub">${p.sub}</div></div>`).join('')}
 <h2 class="section-title">Getting around</h2>
 <div class="subhead">Trains & transport</div>
 <ul class="tips">
