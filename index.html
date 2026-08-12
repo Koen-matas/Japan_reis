@@ -197,6 +197,7 @@
     background:rgba(255,255,255,.35);
   }
   .place-card a.name{font-weight:700; font-size:14.5px; text-decoration:none; border-bottom:1.5px solid var(--accent);}
+  .place-card .title{font-weight:700; font-size:14.5px; display:block; margin-bottom:2px;}
   .place-card .area{font-family:var(--mono); font-size:10px; text-transform:uppercase; color:var(--ink-soft); letter-spacing:.05em; float:right;}
   .place-card .desc{display:block; font-size:12.5px; color:var(--ink-soft); margin-top:4px; clear:both;}
   footer{
@@ -455,6 +456,45 @@ const BARS_HTML = `
 <div class="callout"><span class="tag">Tip</span><p>Smoking is still allowed inside many small bars across Japan — expect some smoke in the older-style spots.</p></div>
 `;
 
+/* ---------- FAMILY page content ---------- */
+const FAMILY_HTML = `
+<p style="font-size:13.5px;color:var(--ink-soft);line-height:1.5;margin:0 0 18px 0;">Notes for whoever's joining with the 10-month-old — Japan is genuinely one of the easier countries to do this in, but a few legs of the route are worth planning around.</p>
+
+<h2 class="section-title">Getting around</h2>
+<ul class="tips">
+  <li>Under-6s ride the Shinkansen free on a lap — no ticket needed unless you want them to have their own reserved seat. Strollers must be folded before boarding; there's no dedicated stroller bay, so stow it in the luggage space behind the last row or at the front of the car.</li>
+  <li>Every Shinkansen has a locked multipurpose room usable for nursing or changing — ask any crew member to open it.</li>
+  <li>Major stations (Tokyo, Shin-Osaka, Kyoto) and most local/metro stations have step-free routes via elevator. If it's not obvious, ask staff at the gate — they'll point you to the right lift.</li>
+  <li>Get the <b>Mama Papa Map</b> app (free, iOS/Android) — crowdsourced nursing rooms and diaper-changing stations nationwide, handy for finding one on the fly.</li>
+</ul>
+
+<h2 class="section-title">Feeding & supplies</h2>
+<ul class="tips">
+  <li>7-Eleven, FamilyMart and Lawson stock a limited range of formula and diapers, plus hot water for mixing bottles — fine for topping up, not for restocking.</li>
+  <li>For a full range (formula, nappies, baby food, wipes), look for an <b>Akachan Honpo</b> baby superstore or a big drugstore like Matsumoto Kiyoshi — worth locating one near each base (Tokyo, Kyoto, Osaka) rather than relying on konbini.</li>
+  <li>Kumano Kodo and Koyasan are genuinely rural — stock up on diapers, formula and food in Kyoto before the 17 Oct departure, since options thin out fast once you're on the trail.</li>
+</ul>
+
+<h2 class="section-title">Days worth a rethink</h2>
+<div class="place-card"><span class="title">Fushimi Inari · 14 Oct</span><span class="desc">Flat and stroller-friendly as far as the first torii gates — beyond that it's steep stone steps the whole way up. Bring a structured carrier and leave the stroller at the free parking near the entrance.</span></div>
+<div class="place-card"><span class="title">Arashiyama Monkey Park · 15 Oct</span><span class="desc">~2hr round trip including a hike up a hill — carrier territory, not stroller.</span></div>
+<div class="place-card"><span class="title">Kumano Kodo · 17–20 Oct</span><span class="desc">A real forest trail with uneven ground and rice-terrace paths — a stroller won't work at all here. Worth deciding in advance whether the baby comes along in a carrier for the full hike, or whether it makes more sense for one adult to take the shorter/easier legs with them.</span></div>
+<div class="place-card"><span class="title">Koyasan shukubo · 20–21 Oct</span><span class="desc">Most temples do welcome infants (often free or discounted under a set age), but bathrooms and onsen are typically shared — worth calling the specific temple ahead to confirm their infant policy and ask about a private bath if that matters to you.</span></div>
+
+<h2 class="section-title">Pack for the baby</h2>
+<div class="pack-chips">
+  <div class="pack-chip">Structured baby carrier</div>
+  <div class="pack-chip">Lightweight foldable stroller</div>
+  <div class="pack-chip">Diaper/formula stock for rural legs</div>
+  <div class="pack-chip">Travel changing mat</div>
+  <div class="pack-chip">Sunscreen + rain cover</div>
+  <div class="pack-chip">Vaccination record copy</div>
+  <div class="pack-chip">Travel insurance incl. infant</div>
+  <div class="pack-chip">Familiar snack/formula brand</div>
+</div>
+<div class="callout"><span class="tag">Tip</span><p>None of this is a reason to simplify the route — just worth flagging to whoever's bringing the baby so they can plan around the hiking days and pack accordingly.</p></div>
+`;
+
 /* ---------- MAP page data ---------- */
 const CITIES = [
   {key:'tokyo',     name:'Tokyo',       lat:35.6895, lng:139.6917, stay:'6–10 & 26–28 Oct', days:[3,4,5,7,8,23,24,25]},
@@ -577,6 +617,11 @@ DAYS.forEach((day, i) => {
 makePill('info', 'Info');
 const infoSection = makeSection('info');
 infoSection.innerHTML = `<h1 class="hero" style="font-size:24px;">Practical info</h1>` + INFO_HTML;
+
+/* Family tab */
+makePill('family', 'Family');
+const familySection = makeSection('family');
+familySection.innerHTML = `<h1 class="hero" style="font-size:24px;">Travelling with a baby</h1>` + FAMILY_HTML;
 
 /* Bars tab */
 makePill('bars', 'Bars');
