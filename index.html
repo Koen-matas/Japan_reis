@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 <style>
   :root{
     --paper:#F4F3EC;
@@ -203,6 +204,29 @@
     border-top:1px solid var(--line);
     font-family:var(--mono); font-size:11px; color:var(--ink-soft); text-align:center;
   }
+  /* interactive map */
+  .map-intro{font-size:13px; color:var(--ink-soft); line-height:1.5; margin:0 0 14px 0;}
+  .map-wrap{border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  #japanMap{height:460px; width:100%; background:var(--paper-2);}
+  .city-dot{
+    width:15px; height:15px; border-radius:50%;
+    background:var(--accent); border:2.5px solid #fff;
+    box-shadow:0 0 0 1.5px var(--accent);
+  }
+  .city-label{
+    font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.03em;
+    color:var(--ink); background:rgba(244,243,236,.92); padding:1px 6px; border-radius:4px;
+    border:1px solid var(--line); white-space:nowrap; box-shadow:none;
+  }
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip{font-family:var(--display);}
+  .map-popup .name{font-weight:700; font-size:14.5px; margin-bottom:2px;}
+  .map-popup .stay{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); margin-bottom:8px;}
+  .map-popup .daylink{
+    display:block; width:100%; text-align:left; font-family:var(--mono); font-size:11.5px;
+    padding:5px 8px; margin-bottom:4px; border:1px solid var(--line); border-radius:6px;
+    background:var(--paper-2); color:var(--ink); cursor:pointer;
+  }
+  .map-popup .daylink:hover{background:var(--accent); color:#fff; border-color:var(--accent);}
   @media (prefers-reduced-motion:reduce){ section.tab.active{animation:none;} }
 </style>
 </head>
@@ -217,6 +241,7 @@
 
 <footer>Have a brilliant trip · recheck tickets, hours &amp; trains before you go</footer>
 
+<script src="vendor/leaflet/leaflet.js"></script>
 <script>
 /* ---------- helpers ---------- */
 function mapsLink(q){ return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q); }
@@ -430,6 +455,59 @@ const BARS_HTML = `
 <div class="callout"><span class="tag">Tip</span><p>Smoking is still allowed inside many small bars across Japan — expect some smoke in the older-style spots.</p></div>
 `;
 
+/* ---------- MAP page data ---------- */
+const CITIES = [
+  {key:'tokyo',     name:'Tokyo',       lat:35.6895, lng:139.6917, stay:'6–10 & 26–28 Oct', days:[3,4,5,7,8,23,24,25]},
+  {key:'nikko',     name:'Nikko',       lat:36.7199, lng:139.6982, stay:'Day trip · 9 Oct', days:[6]},
+  {key:'hakone',    name:'Hakone',      lat:35.2323, lng:139.1069, stay:'11–12 Oct', days:[8,9]},
+  {key:'kyoto',     name:'Kyoto',       lat:35.0116, lng:135.7681, stay:'12–17 Oct', days:[9,10,11,12,13,14]},
+  {key:'kumano',    name:'Kumano Kodo', lat:33.8397, lng:135.7727, stay:'17–20 Oct', days:[14,15,16,17]},
+  {key:'koyasan',   name:'Koyasan',     lat:34.2125, lng:135.5858, stay:'20–21 Oct', days:[17,18]},
+  {key:'osaka',     name:'Osaka',       lat:34.6937, lng:135.5023, stay:'21–24 Oct', days:[18,19,20]},
+  {key:'himeji',    name:'Himeji',      lat:34.8394, lng:134.6939, stay:'Day trip · 24 Oct', days:[21]},
+  {key:'hiroshima', name:'Hiroshima',   lat:34.3853, lng:132.4553, stay:'24–26 Oct', days:[21,22]},
+  {key:'miyajima',  name:'Miyajima',    lat:34.2969, lng:132.3196, stay:'25–26 Oct', days:[22]},
+];
+const ROUTE_ORDER = ['tokyo','nikko','tokyo','hakone','kyoto','kumano','koyasan','osaka','himeji','hiroshima','miyajima','tokyo'];
+
+let japanMap = null;
+function dayLabel(n){
+  const day = DAYS[n-1];
+  return day ? (day.d + ' — ' + day.title) : ('Day ' + n);
+}
+function initMap(){
+  if(japanMap) return;
+  japanMap = L.map('japanMap', {scrollWheelZoom:false});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom:18,
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
+  }).addTo(japanMap);
+
+  const cityByKey = {};
+  CITIES.forEach(c => cityByKey[c.key] = c);
+
+  const routeLatLngs = ROUTE_ORDER.map(k => [cityByKey[k].lat, cityByKey[k].lng]);
+  L.polyline(routeLatLngs, {color:'#C4622D', weight:2.5, opacity:.75, dashArray:'1 8', lineCap:'round'}).addTo(japanMap);
+
+  const bounds = [];
+  CITIES.forEach(city => {
+    const icon = L.divIcon({className:'', html:'<div class="city-dot"></div>', iconSize:[15,15], iconAnchor:[7,7]});
+    const marker = L.marker([city.lat, city.lng], {icon}).addTo(japanMap);
+    marker.bindTooltip(city.name, {permanent:true, direction:'top', offset:[0,-6], className:'city-label'});
+
+    const popupEl = document.createElement('div');
+    popupEl.className = 'map-popup';
+    popupEl.innerHTML = `<div class="name">${city.name}</div><div class="stay">${city.stay}</div>` +
+      city.days.map(n => `<button class="daylink" data-day="d${n}">${dayLabel(n)}</button>`).join('');
+    popupEl.querySelectorAll('.daylink').forEach(btn => {
+      btn.addEventListener('click', () => showTab(btn.dataset.day));
+    });
+    marker.bindPopup(popupEl);
+    bounds.push([city.lat, city.lng]);
+  });
+  japanMap.fitBounds(bounds, {padding:[26,26]});
+}
+
 /* ---------- render ---------- */
 const pillNav = document.getElementById('pillNav');
 const tabRoot = document.getElementById('tabRoot');
@@ -465,6 +543,15 @@ tripSection.innerHTML = `
   <div class="wx-strip">
     ${WX.map(w => `<div class="wx-chip"><div class="region">${w.region}</div><div class="temp">${w.temp}</div><div class="cond">${w.cond}</div></div>`).join('')}
   </div>
+`;
+
+/* Map tab */
+makePill('map', 'Map');
+const mapSection = makeSection('map');
+mapSection.innerHTML = `
+  <h1 class="hero" style="font-size:24px;">Route map</h1>
+  <p class="map-intro">Tap a city marker to see which days you're there, then jump straight to that day's plan.</p>
+  <div class="map-wrap"><div id="japanMap"></div></div>
 `;
 
 /* Day tabs */
@@ -506,6 +593,10 @@ function showTab(id){
   window.scrollTo({top:0, behavior:'instant'});
   const pill = document.querySelector('.pill[data-tab="' + id + '"]');
   pill.scrollIntoView({inline:'center', block:'nearest', behavior:'smooth'});
+  if(id === 'map'){
+    initMap();
+    setTimeout(() => { if(japanMap) japanMap.invalidateSize(); }, 50);
+  }
 }
 showTab('trip');
 </script>
