@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="theme-color" content="#F4F3EC">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Japan · 6–29 Oct 2026</title>
+<title>Japan · 6–28 Oct 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -234,7 +234,7 @@
 <body>
 
 <header class="topbar">
-  <div class="topbar-title">JAPAN 6–29 OCT <small>Group trip · Amsterdam → Tokyo → Osaka → Amsterdam</small></div>
+  <div class="topbar-title">JAPAN 6–28 OCT <small>Group trip · Amsterdam → Tokyo → Osaka → Amsterdam</small></div>
   <nav class="pills" id="pillNav"></nav>
 </header>
 
@@ -251,8 +251,8 @@ function accentFor(i,total){ return 'hsl(' + Math.round((i*360/total)) + ' 62% 4
 /* ---------- trip-wide data ---------- */
 const BOOKINGS = [
   {k:'Flight out (EK146 + EK312)', v:'Amsterdam → Dubai → Tokyo Haneda', sub:'Sun 4 Oct, 11:25 AMS → Tue 6 Oct, 22:20 HND · ref: JBYDQB'},
-  {k:'Hotel — Tokyo (Yanaka)', v:'Yanaka base, 6–10 & 26–29 Oct', sub:'Address & confirmation: ask me'},
-  {k:'Flight home (EK313 + EK147)', v:'Tokyo Haneda → Dubai → Amsterdam', sub:'Thu 29 Oct 2026 · ref: JBYDQB · exact departure time TBC'},
+  {k:'Hotel — Tokyo (Yanaka)', v:'Yanaka base, 6–10 & 26–28 Oct', sub:'Address & confirmation: ask me'},
+  {k:'Flight home (EK313 + EK147)', v:'Tokyo Haneda → Dubai → Amsterdam', sub:'Departs Haneda Wed 28 Oct · arrives Amsterdam Thu 29 Oct · ref: JBYDQB · exact times TBC'},
 ];
 
 const WX = [
@@ -396,12 +396,9 @@ const DAYS = [
 {d:'Tue 27 Oct', short:'27', title:'Tokyo — free day', cond:'Catch-up / last shopping', stops:[
   {t:'AM', p:'Tokyo', q:'Tokyo', n:'Whatever got missed — Shinjuku Gyoen, TeamLab, sumo at Ryogoku, or just rest'},
 ]},
-{d:'Wed 28 Oct', short:'28', title:'Tokyo — last full day', cond:'Free day / pack up', stops:[
-  {t:'AM', p:'Tokyo', q:'Tokyo', n:'One more free day — favourite spots, last souvenirs, or just rest before the flight'},
-]},
-{d:'Thu 29 Oct', short:'29', title:'Tokyo → home', cond:'Departure day', stops:[
+{d:'Wed 28 Oct', short:'28', title:'Tokyo → home', cond:'Departure day', stops:[
   {t:'AM', p:'Tokyo', q:'Tokyo', n:'Last morning — breakfast, final errands, check out'},
-  {t:'PM', p:'Haneda Airport', q:'Haneda Airport', n:'EK313 to Dubai, connecting to EK147 to Amsterdam — check booking for exact departure time'},
+  {t:'PM', p:'Haneda Airport', q:'Haneda Airport', n:'EK313 to Dubai, connecting to EK147 to Amsterdam — arriving home Thu 29 Oct local time. Check booking for exact departure time'},
 ]},
 ];
 
@@ -499,7 +496,7 @@ const FAMILY_HTML = `
 
 /* ---------- MAP page data ---------- */
 const CITIES = [
-  {key:'tokyo',     name:'Tokyo',       lat:35.6895, lng:139.6917, stay:'6–10 & 26–29 Oct', days:[3,4,5,7,8,23,24,25,26]},
+  {key:'tokyo',     name:'Tokyo',       lat:35.6895, lng:139.6917, stay:'6–10 & 26–28 Oct', days:[3,4,5,7,8,23,24,25]},
   {key:'nikko',     name:'Nikko',       lat:36.7199, lng:139.6982, stay:'Day trip · 9 Oct', days:[6]},
   {key:'hakone',    name:'Hakone',      lat:35.2323, lng:139.1069, stay:'11–12 Oct', days:[8,9]},
   {key:'kyoto',     name:'Kyoto',       lat:35.0116, lng:135.7681, stay:'12–17 Oct', days:[9,10,11,12,13,14]},
@@ -576,7 +573,7 @@ function makeSection(id){
 makePill('trip', 'Trip');
 const tripSection = makeSection('trip');
 tripSection.innerHTML = `
-  <span class="eyebrow">Group trip companion · 6\u201329 Oct 2026</span>
+  <span class="eyebrow">Group trip companion · 6\u201328 Oct 2026</span>
   <h1 class="hero">JAPAN</h1>
   <p class="lede">A packed, mid-range three-week loop: Tokyo, Nikko, Hakone, Kyoto, the Kumano Kodo, Koyasan, Osaka, Himeji, Hiroshima and Miyajima. Tap a place to open it in Maps.</p>
   <h2 class="section-title">Your bookings</h2>
