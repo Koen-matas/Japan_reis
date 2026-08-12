@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#F4F3EC">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Japan · 6–28 Oct 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F3EC;
+    --paper-2:#ECE9DF;
+    --ink:#1B1B18;
+    --ink-soft:#5B584E;
+    --line: rgba(27,27,24,0.14);
+    --accent:#C4622D;
+    --display:'Space Grotesk', system-ui, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--display);
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:48px;
+  }
+  a{color:inherit;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  /* Top bar */
+  header.topbar{
+    position:sticky; top:0; z-index:50;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    padding:10px 14px 0 14px;
+  }
+  .topbar-title{
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:.02em;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    padding-bottom:8px;
+  }
+  .topbar-title small{
+    font-family:var(--mono);
+    font-weight:400;
+    font-size:11px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+  }
+  nav.pills{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    padding-bottom:10px;
+    -webkit-overflow-scrolling:touch;
+  }
+  nav.pills::-webkit-scrollbar{display:none;}
+  .pill{
+    flex:0 0 auto;
+    font-family:var(--mono);
+    font-size:11.5px;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    padding:7px 12px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--paper-2);
+    color:var(--ink-soft);
+    cursor:pointer;
+    white-space:nowrap;
+    transition:background .15s, color .15s, border-color .15s;
+  }
+  .pill.active{
+    background:var(--pill-accent, var(--accent));
+    border-color:var(--pill-accent, var(--accent));
+    color:#fff;
+  }
+  /* Sections */
+  main{padding:18px 14px 8px 14px; max-width:640px; margin:0 auto;}
+  section.tab{display:none;}
+  section.tab.active{display:block; animation:fadein .18s ease;}
+  @keyframes fadein{from{opacity:0} to{opacity:1}}
+  h1.hero{
+    font-size:30px;
+    line-height:1.05;
+    margin:6px 0 4px 0;
+    letter-spacing:-.01em;
+  }
+  p.lede{
+    color:var(--ink-soft);
+    font-size:14.5px;
+    line-height:1.5;
+    margin:0 0 20px 0;
+  }
+  h2.section-title{
+    font-size:12px;
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--ink-soft);
+    margin:26px 0 10px 0;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--line);
+  }
+  h2.section-title:first-of-type{margin-top:0;}
+  .card{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:10px;
+    background:rgba(255,255,255,.35);
+  }
+  .card .k{
+    font-family:var(--mono);
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--ink-soft);
+    margin-bottom:3px;
+  }
+  .card .v{font-weight:600; font-size:15px; margin-bottom:2px;}
+  .card .sub{font-size:12.5px; color:var(--ink-soft);}
+  .card .sub a{text-decoration:underline; text-decoration-color:var(--line);}
+  /* weather strip */
+  .wx-strip{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none;}
+  .wx-strip::-webkit-scrollbar{display:none;}
+  .wx-chip{
+    flex:0 0 auto;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 12px;
+    min-width:84px;
+    text-align:center;
+    background:rgba(255,255,255,.35);
+  }
+  .wx-chip .region{font-family:var(--mono); font-size:9.5px; text-transform:uppercase; color:var(--ink-soft); letter-spacing:.05em;}
+  .wx-chip .temp{font-weight:700; font-size:17px; margin:3px 0;}
+  .wx-chip .cond{font-size:10.5px; color:var(--ink-soft);}
+  /* day timeline */
+  .day-head{margin-bottom:14px;}
+  .day-head .date{font-size:12px; font-family:var(--mono); color:var(--accent); font-weight:600; letter-spacing:.04em; text-transform:uppercase;}
+  .day-head h1{margin:2px 0 4px 0;}
+  .day-head .cond{font-family:var(--mono); font-size:11.5px; color:var(--ink-soft);}
+  ol.timeline{list-style:none; margin:0; padding:0; border-left:2px solid var(--line); margin-left:6px;}
+  ol.timeline li{position:relative; padding:0 0 20px 22px;}
+  ol.timeline li::before{
+    content:'';
+    position:absolute; left:-7px; top:2px;
+    width:12px; height:12px; border-radius:50%;
+    background:var(--paper);
+    border:2.5px solid var(--accent);
+  }
+  ol.timeline li .time{
+    font-family:var(--mono); font-size:11px; color:var(--accent); font-weight:600; letter-spacing:.03em; display:block; margin-bottom:2px;
+  }
+  ol.timeline li .place{
+    display:inline-block; font-weight:700; font-size:15.5px; text-decoration:none;
+    border-bottom:1.5px solid var(--accent);
+  }
+  ol.timeline li .note{display:block; font-size:12.5px; color:var(--ink-soft); margin-top:3px; line-height:1.4;}
+  .callout{
+    margin-top:16px;
+    border-left:3px solid var(--accent);
+    background:rgba(0,0,0,.03);
+    padding:10px 12px;
+    border-radius:0 8px 8px 0;
+  }
+  .callout .tag{font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.07em; color:var(--accent); font-weight:700; display:block; margin-bottom:3px;}
+  .callout p{margin:0; font-size:13px; line-height:1.45; color:var(--ink-soft);}
+  /* info page */
+  .subhead{font-weight:700; font-size:15px; margin:18px 0 6px 0;}
+  ul.tips, ol.tips{margin:0 0 10px 0; padding-left:18px; font-size:13.5px; line-height:1.55; color:var(--ink);}
+  ul.tips li, ol.tips li{margin-bottom:5px;}
+  .pack-chips{display:flex; flex-wrap:wrap; gap:7px; margin-top:8px;}
+  .pack-chip{
+    font-family:var(--mono); font-size:11.5px;
+    border:1px solid var(--line); border-radius:999px; padding:5px 11px;
+    background:rgba(255,255,255,.4);
+  }
+  /* bars page */
+  .place-card{
+    border:1px solid var(--line); border-radius:10px; padding:11px 13px; margin-bottom:8px;
+    background:rgba(255,255,255,.35);
+  }
+  .place-card a.name{font-weight:700; font-size:14.5px; text-decoration:none; border-bottom:1.5px solid var(--accent);}
+  .place-card .area{font-family:var(--mono); font-size:10px; text-transform:uppercase; color:var(--ink-soft); letter-spacing:.05em; float:right;}
+  .place-card .desc{display:block; font-size:12.5px; color:var(--ink-soft); margin-top:4px; clear:both;}
+  footer{
+    max-width:640px; margin:26px auto 0 auto; padding:16px 14px 0 14px;
+    border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:11px; color:var(--ink-soft); text-align:center;
+  }
+  @media (prefers-reduced-motion:reduce){ section.tab.active{animation:none;} }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-title">JAPAN 6–28 OCT <small>Group trip · Amsterdam → Tokyo → Osaka → Amsterdam</small></div>
+  <nav class="pills" id="pillNav"></nav>
+</header>
+
+<main id="tabRoot"></main>
+
+<footer>Have a brilliant trip · recheck tickets, hours &amp; trains before you go</footer>
+
+<script>
+/* ---------- helpers ---------- */
+function mapsLink(q){ return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q); }
+function accentFor(i,total){ return 'hsl(' + Math.round((i*360/total)) + ' 62% 42%)'; }
+
+/* ---------- trip-wide data ---------- */
+const BOOKINGS = [
+  {k:'Flight out', v:'Amsterdam → Dubai', sub:'Sun 4 Oct · booking ref: ask me'},
+  {k:'Flight in', v:'Dubai → Tokyo Haneda', sub:'Tue 6 Oct · lands ~23:30 local · booking ref: ask me'},
+  {k:'Hotel — Tokyo (Yanaka)', v:'Yanaka base, 6–10 & 26–28 Oct', sub:'Address & confirmation: ask me'},
+  {k:'Flight home', v:'Tokyo → Dubai → Amsterdam', sub:'Wed 28 Oct, afternoon/evening · booking ref: ask me'},
+];
+
+const WX = [
+  {region:'Tokyo', temp:'18–23°', cond:'mild, some rain'},
+  {region:'Nikko', temp:'10–18°', cond:'cool, mountain'},
+  {region:'Hakone', temp:'12–19°', cond:'cool, misty'},
+  {region:'Kyoto', temp:'16–23°', cond:'mild, dry-ish'},
+  {region:'Kumano', temp:'13–20°', cond:'cool, forest'},
+  {region:'Koyasan', temp:'8–16°', cond:'cold, mountain'},
+  {region:'Osaka', temp:'17–23°', cond:'mild'},
+  {region:'Hiroshima', temp:'16–22°', cond:'mild'},
+];
+
+/* ---------- day-by-day data ---------- */
+const DAYS = [
+{d:'Sun 4 Oct', short:'4', title:'Amsterdam → Dubai', cond:'Travel day', stops:[
+  {t:'—', p:'Amsterdam Schiphol', q:'Amsterdam Schiphol Airport', n:'Check in, flight to Dubai'},
+  {t:'—', p:'Dubai', q:'Dubai', n:'Overnight — layover stop'},
+]},
+{d:'Mon 5 Oct', short:'5', title:'Dubai', cond:'Free day / layover', stops:[
+  {t:'AM', p:'Dubai', q:'Dubai', n:'Free time — rest up before the long leg to Tokyo'},
+]},
+{d:'Tue 6 Oct', short:'6', title:'Dubai → Tokyo Haneda', cond:'Arrival — late landing', stops:[
+  {t:'—', p:'Dubai Airport', q:'Dubai International Airport', n:'Depart for Tokyo'},
+  {t:'~23:30', p:'Tokyo Haneda Airport', q:'Haneda Airport', n:'Landing — immigration, luggage, IC card'},
+  {t:'late', p:'Hotel in Yanaka', q:'Yanaka, Tokyo', n:'Taxi or last train — straight to bed, no plans tonight'},
+]},
+{d:'Wed 7 Oct', short:'7', title:'East Tokyo — Yanaka, Asakusa, Akihabara', cond:'Packed day 1', stops:[
+  {t:'9:00', p:'Yanaka Ginza', q:'Yanaka Ginza, Tokyo', n:'Breakfast + wander the old-town shopping street'},
+  {t:'10:30', p:'Ueno Park', q:'Ueno Park, Tokyo', n:'Stroll toward Toshogu Shrine'},
+  {t:'13:00', p:'Senso-ji', q:'Senso-ji Temple Asakusa', n:'Tokyo\u2019s oldest temple + Nakamise shopping street'},
+  {t:'15:30', p:'Hoppy Street', q:'Hoppy Street Asakusa', n:'Casual lunch/snacks among the yakitori stalls'},
+  {t:'19:00', p:'Akihabara', q:'Akihabara Electric Town', n:'Gachapon arcades, retro game shops (Super Potato)'},
+]},
+{d:'Thu 8 Oct', short:'8', title:'West Tokyo — Harajuku, Shibuya, Shinjuku', cond:'Packed day 2', stops:[
+  {t:'9:00', p:'Meiji Shrine', q:'Meiji Jingu Shrine Tokyo', n:'Go early, quiet forest walk in — the one shrine not to skip'},
+  {t:'10:30', p:'Cat Street, Harajuku', q:'Cat Street Harajuku', n:'Skip Takeshita St unless you want the crowds'},
+  {t:'12:00', p:'Laforet Harajuku', q:'Laforet Harajuku', n:'Alt-fashion mall, quick browse'},
+  {t:'14:00', p:'Shibuya Crossing', q:'Shibuya Crossing', n:'Sky deck for the view over the scramble'},
+  {t:'16:30', p:'Shimokitazawa', q:'Shimokitazawa Tokyo', n:'Optional detour — vintage clothing streets'},
+  {t:'19:00', p:'Omoide Yokocho', q:'Omoide Yokocho Shinjuku', n:'Dinner in the yakitori alleys'},
+  {t:'21:00', p:'Golden Gai', q:'Golden Gai Shinjuku', n:'Tiny bars — or Antiknock for a punk show'},
+]},
+{d:'Fri 9 Oct', short:'9', title:'Day trip — Nikko', cond:'Full day out of Tokyo', stops:[
+  {t:'7:30', p:'Tokyo — depart', q:'Tokyo Station', n:'Train/bus to Nikko (~2hr)'},
+  {t:'10:00', p:'Toshogu Shrine', q:'Toshogu Shrine Nikko', n:'UNESCO site — ornate carvings'},
+  {t:'12:30', p:'Kegon Falls', q:'Kegon Falls Nikko', n:'97m waterfall, viewing platform'},
+  {t:'14:00', p:'Kanmangafuchi Abyss', q:'Kanmangafuchi Abyss Nikko', n:'Short scenic walk, rows of jizo statues'},
+  {t:'17:00', p:'Onsen, Nikko', q:'Onsen Nikko', n:'Soak before heading back — book a private one if not everyone\u2019s in'},
+]},
+{d:'Sat 10 Oct', short:'10', title:'Tsukiji Outer Market → Ginza', cond:'Food-forward day', stops:[
+  {t:'9:00', p:'Tsukiji Outer Market', q:'Tsukiji Outer Market Tokyo', n:'Breakfast crawl — Kagari soba, Afuri ramen'},
+  {t:'12:00', p:'Coffee Base Nashinoki', q:'Coffee Base Nashinoki Tokyo', n:'Coffee stop, lunch in the park'},
+  {t:'14:00', p:'Ginza', q:'Ginza Tokyo', n:'Department stores, flagship shops, wander'},
+]},
+{d:'Sun 11 Oct', short:'11', title:'Tokyo → Hakone', cond:'Travel AM · sightsee PM', stops:[
+  {t:'8:00', p:'Tokyo Station', q:'Tokyo Station', n:'Shinkansen + local to Hakone (1.5–2hr)'},
+  {t:'11:00', p:'Hakone', q:'Hakone', n:'Check in, drop bags — consider the Hakone Free Pass'},
+  {t:'14:00', p:'Owakudani', q:'Owakudani Hakone', n:'Volcanic valley + ropeway — try the black eggs'},
+]},
+{d:'Mon 12 Oct', short:'12', title:'Lake Ashi → Kyoto', cond:'Early views, then travel', stops:[
+  {t:'6:30', p:'Lake Ashi', q:'Lake Ashi Hakone', n:'Early for the best shot at clear Mt Fuji views'},
+  {t:'9:00', p:'Hakone Shrine', q:'Hakone Shrine', n:'Torii gate on the lake, short walk'},
+  {t:'12:30', p:'Odawara Station', q:'Odawara Station', n:'Shinkansen to Kyoto (~2.5hr) — sit on the right for Fuji'},
+  {t:'19:00', p:'Gion', q:'Gion Kyoto', n:'Evening walk, lantern-lit streets'},
+]},
+{d:'Tue 13 Oct', short:'13', title:'East Kyoto — Gion, Kiyomizu-dera', cond:'Packed day', stops:[
+  {t:'7:00', p:'Gion', q:'Gion Kyoto', n:'Early for a chance of spotting geisha before crowds'},
+  {t:'9:00', p:'Kiyomizu-dera', q:'Kiyomizu-dera Kyoto', n:'Wooden temple, sweeping city views'},
+  {t:'11:30', p:'Higashiyama', q:'Higashiyama District Kyoto', n:'Preserved streets, tea shops'},
+  {t:'14:00', p:'Maruyama Park', q:'Maruyama Park Kyoto', n:'Rest stop, lunch'},
+  {t:'16:00', p:'Philosopher\u2019s Path', q:'Philosopher\u2019s Path Kyoto', n:'Canal-side stroll toward Ginkaku-ji'},
+]},
+{d:'Wed 14 Oct', short:'14', title:'Fushimi Inari + biking', cond:'Early start recommended', stops:[
+  {t:'7:00', p:'Fushimi Inari Shrine', q:'Fushimi Inari Taisha', n:'Thousands of torii gates — go before 8am to beat the crowds'},
+  {t:'11:00', p:'Bike rental, Kyoto', q:'Bike rental Kyoto', n:'Rent for the afternoon'},
+  {t:'12:00', p:'Kamo River', q:'Kamo River Kyoto', n:'Ride the riverside path'},
+]},
+{d:'Thu 15 Oct', short:'15', title:'Arashiyama', cond:'Bamboo grove day', stops:[
+  {t:'7:30', p:'Arashiyama Bamboo Grove', q:'Arashiyama Bamboo Grove Kyoto', n:'Go at opening — packed by mid-morning'},
+  {t:'9:00', p:'Iwatayama Monkey Park', q:'Iwatayama Monkey Park', n:'~2hr round trip with the hike up'},
+  {t:'12:00', p:'Tenryu-ji', q:'Tenryu-ji Temple Kyoto', n:'Zen garden, UNESCO site'},
+  {t:'14:00', p:'Sagano Scenic Railway', q:'Sagano Scenic Railway', n:'Optional — scenic train, return by boat down the river'},
+]},
+{d:'Fri 16 Oct', short:'16', title:'North Kyoto — Nishiki, Kinkaku-ji', cond:'Market + gold pavilion', stops:[
+  {t:'9:00', p:'Nishiki Market', q:'Nishiki Market Kyoto', n:'"Kyoto\u2019s Kitchen" — food stalls, snacks'},
+  {t:'12:00', p:'Nijo Castle', q:'Nijo Castle Kyoto', n:'Nightingale floors, Edo-era grounds'},
+  {t:'14:30', p:'Kinkaku-ji', q:'Kinkaku-ji Golden Pavilion', n:'The golden pavilion, reflecting pond'},
+  {t:'18:30', p:'Pontocho', q:'Pontocho Alley Kyoto', n:'Dinner in the narrow riverside alley'},
+]},
+{d:'Sat 17 Oct', short:'17', title:'Kyoto → Kumano (Takahara)', cond:'Long travel day (~5hr)', stops:[
+  {t:'9:00', p:'Kyoto Station', q:'Kyoto Station', n:'Train + bus toward the Kumano Kodo trailhead'},
+  {t:'14:00', p:'Takahara', q:'Takahara Kumano Kodo', n:'Arrive, settle in — mountain village start of the pilgrim trail'},
+]},
+{d:'Sun 18 Oct', short:'18', title:'Kumano Kodo hike', cond:'Trail day', stops:[
+  {t:'8:00', p:'Takahara', q:'Takahara Kumano Kodo', n:'Start the pilgrim trail'},
+  {t:'—', p:'Chikatsuyu / Nonaka', q:'Chikatsuyu Kumano Kodo', n:'Hike through forest and rice terraces to the next stop'},
+]},
+{d:'Mon 19 Oct', short:'19', title:'Kumano Hongu Taisha → Yunomine Onsen', cond:'Short hike + onsen', stops:[
+  {t:'9:00', p:'Kumano Hongu Taisha', q:'Kumano Hongu Taisha', n:'Short hike in — grand shrine, huge torii'},
+  {t:'13:00', p:'Yunomine Onsen', q:'Yunomine Onsen', n:'~15min transfer — one of Japan\u2019s oldest hot springs'},
+]},
+{d:'Tue 20 Oct', short:'20', title:'Kumano → Koyasan', cond:'Long travel (~5hr) — check in by 16:00', stops:[
+  {t:'8:00', p:'Yunomine Onsen', q:'Yunomine Onsen', n:'Depart via Kii-Tanabe → Hashimoto'},
+  {t:'—', p:'Koyasan cable car', q:'Koyasan Cable Car', n:'Final stretch up the mountain'},
+  {t:'15:30', p:'Temple lodging, Koyasan', q:'Koyasan temple lodging', n:'Check in by 16:00 — shukubo if bookable'},
+  {t:'18:00', p:'Okunoin', q:'Okunoin Cemetery Koyasan', n:'Evening walk through the lantern-lit cemetery'},
+]},
+{d:'Wed 21 Oct', short:'21', title:'Koyasan → Osaka', cond:'Travel day (~2.5hr)', stops:[
+  {t:'7:00', p:'Okunoin', q:'Okunoin Cemetery Koyasan', n:'Optional early return visit — quiet morning light'},
+  {t:'11:00', p:'Koyasan Station', q:'Koyasan Station', n:'Cable car + train to Osaka'},
+  {t:'15:00', p:'Osaka', q:'Osaka', n:'Check in, settle'},
+]},
+{d:'Thu 22 Oct', short:'22', title:'Osaka — Dotonbori, Osaka Castle', cond:'City day', stops:[
+  {t:'10:00', p:'Osaka Castle', q:'Osaka Castle', n:'Grounds + museum'},
+  {t:'13:00', p:'Amerikamura', q:'Amerikamura Osaka', n:'Street fashion, cafes'},
+  {t:'18:00', p:'Dotonbori', q:'Dotonbori Osaka', n:'Neon canal-side strip, street food'},
+  {t:'20:30', p:'Shinsekai', q:'Shinsekai Osaka', n:'Retro night district, kushikatsu'},
+]},
+{d:'Fri 23 Oct', short:'23', title:'Osaka — markets & skyline', cond:'Flex day', stops:[
+  {t:'9:30', p:'Kuromon Market', q:'Kuromon Ichiba Market', n:'Seafood breakfast crawl'},
+  {t:'12:00', p:'Umeda Sky Building', q:'Umeda Sky Building', n:'Floating garden observatory'},
+  {t:'19:00', p:'Endo Sushi', q:'Endo Sushi Osaka', n:'Dinner — or a Kobe day trip instead if preferred'},
+]},
+{d:'Sat 24 Oct', short:'24', title:'Osaka → Himeji → Hiroshima', cond:'Travel + castle en route', stops:[
+  {t:'8:00', p:'Osaka Station', q:'Osaka Station', n:'Shinkansen toward Himeji (~1–1.5hr)'},
+  {t:'10:00', p:'Himeji Castle', q:'Himeji Castle', n:'Japan\u2019s best-preserved original castle'},
+  {t:'14:00', p:'Himeji Station', q:'Himeji Station', n:'Onward to Hiroshima (~1hr)'},
+]},
+{d:'Sun 25 Oct', short:'25', title:'Hiroshima → Miyajima', cond:'Memorial morning, island evening', stops:[
+  {t:'9:00', p:'Peace Memorial Museum', q:'Hiroshima Peace Memorial Museum', n:'Allow 2hr+'},
+  {t:'11:30', p:'Atomic Bomb Dome', q:'Atomic Bomb Dome Hiroshima', n:'Peace Memorial Park'},
+  {t:'14:00', p:'Miyajima Ferry', q:'Miyajimaguchi Ferry Terminal', n:'Short ferry crossing'},
+  {t:'15:00', p:'Itsukushima Shrine', q:'Itsukushima Shrine Miyajima', n:'Floating torii gate — check tide times'},
+]},
+{d:'Mon 26 Oct', short:'26', title:'Miyajima → Tokyo', cond:'Long travel day (~5hr)', stops:[
+  {t:'8:00', p:'Mount Misen', q:'Mount Misen Ropeway Miyajima', n:'Ropeway up, views over the Inland Sea'},
+  {t:'12:00', p:'Miyajima Ferry', q:'Miyajimaguchi Ferry Terminal', n:'Back to the mainland'},
+  {t:'13:30', p:'Hiroshima Station', q:'Hiroshima Station', n:'Shinkansen back to Tokyo'},
+]},
+{d:'Tue 27 Oct', short:'27', title:'Tokyo — free day', cond:'Catch-up / last shopping', stops:[
+  {t:'AM', p:'Tokyo', q:'Tokyo', n:'Whatever got missed — Shinjuku Gyoen, TeamLab, sumo at Ryogoku, or just rest'},
+]},
+{d:'Wed 28 Oct', short:'28', title:'Tokyo → home', cond:'Departure day', stops:[
+  {t:'AM', p:'Tokyo', q:'Tokyo', n:'Last morning — breakfast, final errands'},
+  {t:'14:00', p:'Haneda Airport', q:'Haneda Airport', n:'Head to the airport for the flight home'},
+]},
+];
+
+/* ---------- INFO page content ---------- */
+const INFO_HTML = `
+<h2 class="section-title">Getting around</h2>
+<div class="subhead">Trains & transport</div>
+<ul class="tips">
+  <li>Get an <b>IC card</b> (Suica/Pasmo) at Haneda on arrival — taps on nearly all trains, subways, buses and convenience stores.</li>
+  <li>Book the long-haul <b>Shinkansen legs ahead</b>, especially Kyoto→Kumano, Koyasan connections and the Hiroshima→Tokyo return — seats can sell out on popular days.</li>
+  <li>Consider the <b>Hakone Free Pass</b> for the Hakone loop (ropeway, boat, buses).</li>
+  <li>Kumano Kodo and Koyasan legs involve local trains + buses with limited daily departures — check timetables the night before.</li>
+</ul>
+<h2 class="section-title">Money</h2>
+<ul class="tips">
+  <li>Cards are widely accepted in cities; carry cash for temples, rural areas (Kumano/Koyasan), and small food stalls.</li>
+  <li>7-Eleven and Japan Post ATMs reliably accept foreign cards with low fees.</li>
+  <li>Rough per-person/day at mid-range: transport + food + a couple of entries.</li>
+</ul>
+<h2 class="section-title">Weather & packing</h2>
+<p style="font-size:13.5px;color:var(--ink-soft);line-height:1.5;">Early-to-late October: mild in the cities, noticeably cooler in the mountains (Nikko, Hakone, Koyasan). Layers matter more than any single heavy coat. Recheck the forecast the week before you go.</p>
+<div class="pack-chips">
+  <div class="pack-chip">Passport / ID</div>
+  <div class="pack-chip">Layers (light + 1 warm)</div>
+  <div class="pack-chip">Rain layer</div>
+  <div class="pack-chip">Comfy walking shoes</div>
+  <div class="pack-chip">Hiking shoes (Kumano/Nikko)</div>
+  <div class="pack-chip">Onsen towel</div>
+  <div class="pack-chip">IC card + cash</div>
+  <div class="pack-chip">Power bank</div>
+  <div class="pack-chip">Portable WiFi / SIM</div>
+</div>
+<h2 class="section-title">Local tips</h2>
+<ul class="tips">
+  <li>Trains and temples: keep voices down, no eating while walking in most areas.</li>
+  <li>Convenience stores (konbini) are excellent for cheap, solid food on travel days.</li>
+  <li>Shukubo (temple lodging) at Koyasan often includes a shojin ryori (vegetarian) dinner and morning prayers — worth the early start.</li>
+  <li>Tattoos can still be an issue at traditional onsen — check policy or ask about a private bath.</li>
+</ul>
+`;
+
+/* ---------- BARS page content ---------- */
+const BARS_HTML = `
+<h2 class="section-title">Tokyo</h2>
+<div class="place-card"><a class="name" target="_blank" href="${mapsLink('Golden Gai Shinjuku')}">Golden Gai</a><span class="area">Shinjuku</span><span class="desc">Tiny bars stacked into narrow alleys — pick one that looks welcoming and duck in.</span></div>
+<div class="place-card"><a class="name" target="_blank" href="${mapsLink('Omoide Yokocho Shinjuku')}">Omoide Yokocho</a><span class="area">Shinjuku</span><span class="desc">Yakitori alleys, standing bars, smoky and loud in the best way.</span></div>
+<div class="place-card"><a class="name" target="_blank" href="${mapsLink('Antiknock Shinjuku')}">Antiknock</a><span class="area">Shinjuku</span><span class="desc">Small punk/live venue — check the schedule ahead.</span></div>
+<h2 class="section-title">Kyoto</h2>
+<div class="place-card"><a class="name" target="_blank" href="${mapsLink('Pontocho Alley Kyoto')}">Pontocho Alley</a><span class="area">Central Kyoto</span><span class="desc">Riverside alley, everything from casual izakaya to higher-end kaiseki bars.</span></div>
+<div class="place-card"><a class="name" target="_blank" href="${mapsLink('Gion bars Kyoto')}">Gion bars</a><span class="area">Gion</span><span class="desc">Quieter, more traditional — good for a slow last drink.</span></div>
+<h2 class="section-title">Osaka</h2>
+<div class="place-card"><a class="name" target="_blank" href="${mapsLink('Amerikamura Osaka')}">Amerikamura</a><span class="area">Central Osaka</span><span class="desc">Street fashion by day, bar-hopping by night.</span></div>
+<div class="place-card"><a class="name" target="_blank" href="${mapsLink('Dotonbori Osaka')}">Dotonbori</a><span class="area">Namba</span><span class="desc">Neon canal-side strip — loud, dense, great for a group night out.</span></div>
+<div class="callout"><span class="tag">Tip</span><p>Smoking is still allowed inside many small bars across Japan — expect some smoke in the older-style spots.</p></div>
+`;
+
+/* ---------- render ---------- */
+const pillNav = document.getElementById('pillNav');
+const tabRoot = document.getElementById('tabRoot');
+
+function makePill(id, label, accent){
+  const b = document.createElement('button');
+  b.className = 'pill';
+  b.textContent = label;
+  b.dataset.tab = id;
+  if(accent) b.style.setProperty('--pill-accent', accent);
+  b.addEventListener('click', () => showTab(id));
+  pillNav.appendChild(b);
+}
+
+function makeSection(id){
+  const s = document.createElement('section');
+  s.className = 'tab';
+  s.id = 'tab-' + id;
+  tabRoot.appendChild(s);
+  return s;
+}
+
+/* Trip tab */
+makePill('trip', 'Trip');
+const tripSection = makeSection('trip');
+tripSection.innerHTML = `
+  <span class="eyebrow">Group trip companion · 6\u201328 Oct 2026</span>
+  <h1 class="hero">JAPAN</h1>
+  <p class="lede">A packed, mid-range three-week loop: Tokyo, Nikko, Hakone, Kyoto, the Kumano Kodo, Koyasan, Osaka, Himeji, Hiroshima and Miyajima. Tap a place to open it in Maps.</p>
+  <h2 class="section-title">Your bookings</h2>
+  ${BOOKINGS.map(b => `<div class="card"><div class="k">${b.k}</div><div class="v">${b.v}</div><div class="sub">${b.sub}</div></div>`).join('')}
+  <h2 class="section-title">Expect (rough Oct averages)</h2>
+  <div class="wx-strip">
+    ${WX.map(w => `<div class="wx-chip"><div class="region">${w.region}</div><div class="temp">${w.temp}</div><div class="cond">${w.cond}</div></div>`).join('')}
+  </div>
+`;
+
+/* Day tabs */
+DAYS.forEach((day, i) => {
+  const accent = accentFor(i, DAYS.length);
+  const id = 'd' + (i+1);
+  makePill(id, day.short, accent);
+  const s = makeSection(id);
+  s.style.setProperty('--accent', accent);
+  s.innerHTML = `
+    <div class="day-head">
+      <div class="date">${day.d}</div>
+      <h1 class="hero">${day.title}</h1>
+      <div class="cond">${day.cond}</div>
+    </div>
+    <ol class="timeline">
+      ${day.stops.map(st => `<li><span class="time">${st.t}</span><a class="place" target="_blank" href="${mapsLink(st.q)}">${st.p}</a><span class="note">${st.n}</span></li>`).join('')}
+    </ol>
+  `;
+});
+
+/* Info tab */
+makePill('info', 'Info');
+const infoSection = makeSection('info');
+infoSection.innerHTML = `<h1 class="hero" style="font-size:24px;">Practical info</h1>` + INFO_HTML;
+
+/* Bars tab */
+makePill('bars', 'Bars');
+const barsSection = makeSection('bars');
+barsSection.style.setProperty('--accent', '#C4622D');
+barsSection.innerHTML = `<h1 class="hero" style="font-size:24px;">Bars & nightlife</h1>` + BARS_HTML;
+
+/* tab switching */
+function showTab(id){
+  document.querySelectorAll('section.tab').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  document.querySelector('.pill[data-tab="' + id + '"]').classList.add('active');
+  window.scrollTo({top:0, behavior:'instant'});
+  const pill = document.querySelector('.pill[data-tab="' + id + '"]');
+  pill.scrollIntoView({inline:'center', block:'nearest', behavior:'smooth'});
+}
+showTab('trip');
+</script>
+</body>
+</html>
