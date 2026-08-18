@@ -228,9 +228,6 @@
     background:var(--paper-2); color:var(--ink); cursor:pointer;
   }
   .map-popup .daylink:hover{background:var(--accent); color:#fff; border-color:var(--accent);}
-  /* per-day route sketch */
-  .day-map-title{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin:22px 0 8px 0;}
-  .day-route-wrap{border:1px solid var(--line); border-radius:10px; background:var(--paper-2); padding:14px;}
   @media (prefers-reduced-motion:reduce){ section.tab.active{animation:none;} }
 </style>
 </head>
@@ -302,14 +299,6 @@ const DAYS = [
   {t:'Afternoon', p:'Ueno Toshogu Shrine', q:'Ueno Toshogu Shrine Tokyo', n:'Optional — small but beautiful, known for its gold facade and peony garden'},
   {t:'Afternoon', p:'Senso-ji', q:'Senso-ji Temple Asakusa', n:'Ginza Line straight to Asakusa for Tokyo\u2019s oldest temple, via the Nakamise shopping street leading up to it'},
   {t:'Evening', p:'Akihabara', q:'Akihabara Electric Town', n:'Tsukuba Express, just a few minutes to Electric Town — electronics, anime, manga and arcades. Good spot for dinner and a drink in the lively evening atmosphere before heading back to the hotel'},
-], route:[
-  {name:'Hiro Yanaka Hostel', lat:35.7245, lng:139.7615},
-  {name:'Yanaka Ginza', lat:35.7273, lng:139.7663},
-  {name:'Nezu Shrine', lat:35.7202, lng:139.7614},
-  {name:'Ueno Park', lat:35.7146, lng:139.7743},
-  {name:'Ueno Toshogu Shrine', label:'Ueno Toshogu', lat:35.7159, lng:139.7728},
-  {name:'Senso-ji', lat:35.7148, lng:139.7967},
-  {name:'Akihabara', lat:35.7023, lng:139.7745},
 ]},
 {d:'Thu 8 Oct', short:'8', title:'West Tokyo — Harajuku, Shibuya, Shinjuku', cond:'Packed day 2', stops:[
   {t:'9:00', p:'Meiji Shrine', q:'Meiji Jingu Shrine Tokyo', n:'Go early, quiet forest walk in — the one shrine not to skip'},
@@ -574,56 +563,6 @@ function initMap(){
   japanMap.fitBounds(bounds, {padding:[26,26]});
 }
 
-/* per-day route sketch — static SVG, projected from real lat/lng */
-function routeSvg(points){
-  const W = 380, H = 240, PAD = 40;
-  const lats = points.map(p => p.lat), lngs = points.map(p => p.lng);
-  const minLat = Math.min(...lats), maxLat = Math.max(...lats);
-  const minLng = Math.min(...lngs), maxLng = Math.max(...lngs);
-  const lngScale = Math.cos((minLat + maxLat) / 2 * Math.PI / 180);
-  const spanX = (maxLng - minLng) * lngScale || 1;
-  const spanY = (maxLat - minLat) || 1;
-  const innerW = W - PAD * 2, innerH = H - PAD * 2;
-  const scale = Math.min(innerW / spanX, innerH / spanY);
-  const offX = PAD + (innerW - spanX * scale) / 2;
-  const offY = PAD + (innerH - spanY * scale) / 2;
-  const pts = points.map(p => ({
-    x: offX + (p.lng - minLng) * lngScale * scale,
-    y: offY + (maxLat - p.lat) * scale,
-  }));
-  // nudge apart pins that are genuinely almost co-located, so labels stay legible
-  const minDist = 30;
-  for(let iter = 0; iter < 6; iter++){
-    for(let a = 0; a < pts.length; a++){
-      for(let b = a + 1; b < pts.length; b++){
-        const dx0 = pts[b].x - pts[a].x, dy0 = pts[b].y - pts[a].y;
-        const dist = Math.hypot(dx0, dy0) || 0.01;
-        if(dist < minDist){
-          const push = (minDist - dist) / 2;
-          const ux = dx0 / dist, uy = dy0 / dist;
-          pts[a].x -= ux * push; pts[a].y -= uy * push;
-          pts[b].x += ux * push; pts[b].y += uy * push;
-        }
-      }
-    }
-  }
-  const polyStr = pts.map(pt => `${pt.x.toFixed(1)},${pt.y.toFixed(1)}`).join(' ');
-  const pins = points.map((p, i) => {
-    const pt = pts[i];
-    const rightSide = pt.x <= W - 110;
-    const dx = rightSide ? 15 : -15;
-    const anchor = rightSide ? 'start' : 'end';
-    const label = p.label || p.name;
-    return `<circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="10" fill="var(--accent)" stroke="#fff" stroke-width="2.5"/>
-<text x="${pt.x.toFixed(1)}" y="${pt.y.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-family="var(--mono)" font-size="9.5" font-weight="700" fill="#fff">${i + 1}</text>
-<text x="${(pt.x + dx).toFixed(1)}" y="${(pt.y + 3.5).toFixed(1)}" text-anchor="${anchor}" font-family="var(--mono)" font-size="10.5" font-weight="600" fill="var(--ink)">${label}</text>`;
-  }).join('\n');
-  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="auto" style="display:block;">
-<polyline points="${polyStr}" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
-${pins}
-</svg>`;
-}
-
 /* ---------- render ---------- */
 const pillNav = document.getElementById('pillNav');
 const tabRoot = document.getElementById('tabRoot');
@@ -686,10 +625,6 @@ DAYS.forEach((day, i) => {
     <ol class="timeline">
       ${day.stops.map(st => `<li><span class="time">${st.t}</span><a class="place" target="_blank" href="${mapsLink(st.q)}">${st.p}</a><span class="note">${st.n}</span></li>`).join('')}
     </ol>
-    ${day.route ? `
-    <div class="day-map-title">Today's route</div>
-    <div class="day-route-wrap">${routeSvg(day.route)}</div>
-    ` : ''}
   `;
 });
 
