@@ -228,6 +228,21 @@
     background:var(--paper-2); color:var(--ink); cursor:pointer;
   }
   .map-popup .daylink:hover{background:var(--accent); color:#fff; border-color:var(--accent);}
+  /* per-day route map */
+  .day-map-title{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin:22px 0 8px 0;}
+  .day-map-wrap{border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  .day-map{height:340px; width:100%; background:var(--paper-2);}
+  .day-pin{
+    width:22px; height:22px; border-radius:50%;
+    background:var(--accent); border:2px solid #fff; box-shadow:0 0 0 1.5px var(--accent);
+    color:#fff; font-family:var(--mono); font-size:11px; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .day-pin-label{
+    font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.02em;
+    color:var(--ink); background:rgba(244,243,236,.92); padding:1px 6px; border-radius:4px;
+    border:1px solid var(--line); white-space:nowrap;
+  }
   @media (prefers-reduced-motion:reduce){ section.tab.active{animation:none;} }
 </style>
 </head>
@@ -299,6 +314,14 @@ const DAYS = [
   {t:'Afternoon', p:'Ueno Toshogu Shrine', q:'Ueno Toshogu Shrine Tokyo', n:'Optional — small but beautiful, known for its gold facade and peony garden'},
   {t:'Afternoon', p:'Senso-ji', q:'Senso-ji Temple Asakusa', n:'Ginza Line straight to Asakusa for Tokyo\u2019s oldest temple, via the Nakamise shopping street leading up to it'},
   {t:'Evening', p:'Akihabara', q:'Akihabara Electric Town', n:'Tsukuba Express, just a few minutes to Electric Town — electronics, anime, manga and arcades. Good spot for dinner and a drink in the lively evening atmosphere before heading back to the hotel'},
+], route:[
+  {name:'Hiro Yanaka Hostel', lat:35.7245, lng:139.7615},
+  {name:'Yanaka Ginza', lat:35.7273, lng:139.7663},
+  {name:'Nezu Shrine', lat:35.7202, lng:139.7614},
+  {name:'Ueno Park', lat:35.7146, lng:139.7743},
+  {name:'Ueno Toshogu Shrine', lat:35.7159, lng:139.7728},
+  {name:'Senso-ji', lat:35.7148, lng:139.7967},
+  {name:'Akihabara', lat:35.7023, lng:139.7745},
 ]},
 {d:'Thu 8 Oct', short:'8', title:'West Tokyo — Harajuku, Shibuya, Shinjuku', cond:'Packed day 2', stops:[
   {t:'9:00', p:'Meiji Shrine', q:'Meiji Jingu Shrine Tokyo', n:'Go early, quiet forest walk in — the one shrine not to skip'},
@@ -563,6 +586,32 @@ function initMap(){
   japanMap.fitBounds(bounds, {padding:[26,26]});
 }
 
+/* per-day route maps */
+const DAY_MAPS = {};
+const dayMapInstances = {};
+function initDayMap(id){
+  if(dayMapInstances[id] || !DAY_MAPS[id]) return;
+  const route = DAY_MAPS[id];
+  const accent = getComputedStyle(document.getElementById('tab-' + id)).getPropertyValue('--accent').trim() || '#C4622D';
+  const map = L.map('daymap-' + id, {scrollWheelZoom:false});
+  dayMapInstances[id] = map;
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom:19,
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  L.polyline(route.map(pt => [pt.lat, pt.lng]), {color:accent, weight:3, opacity:.85, lineCap:'round'}).addTo(map);
+
+  const bounds = [];
+  route.forEach((pt, idx) => {
+    const icon = L.divIcon({className:'', html:`<div class="day-pin" style="background:${accent};box-shadow:0 0 0 1.5px ${accent};">${idx+1}</div>`, iconSize:[22,22], iconAnchor:[11,11]});
+    const marker = L.marker([pt.lat, pt.lng], {icon}).addTo(map);
+    marker.bindTooltip(pt.name, {permanent:true, direction:'top', offset:[0,-8], className:'day-pin-label'});
+    bounds.push([pt.lat, pt.lng]);
+  });
+  map.fitBounds(bounds, {padding:[24,24]});
+}
+
 /* ---------- render ---------- */
 const pillNav = document.getElementById('pillNav');
 const tabRoot = document.getElementById('tabRoot');
@@ -625,7 +674,12 @@ DAYS.forEach((day, i) => {
     <ol class="timeline">
       ${day.stops.map(st => `<li><span class="time">${st.t}</span><a class="place" target="_blank" href="${mapsLink(st.q)}">${st.p}</a><span class="note">${st.n}</span></li>`).join('')}
     </ol>
+    ${day.route ? `
+    <div class="day-map-title">Today's route</div>
+    <div class="day-map-wrap"><div class="day-map" id="daymap-${id}"></div></div>
+    ` : ''}
   `;
+  if(day.route) DAY_MAPS[id] = day.route;
 });
 
 /* Info tab */
@@ -656,6 +710,10 @@ function showTab(id){
   if(id === 'map'){
     initMap();
     setTimeout(() => { if(japanMap) japanMap.invalidateSize(); }, 50);
+  }
+  if(DAY_MAPS[id]){
+    initDayMap(id);
+    setTimeout(() => { if(dayMapInstances[id]) dayMapInstances[id].invalidateSize(); }, 50);
   }
 }
 showTab('trip');
