@@ -309,7 +309,14 @@ const DAYS = [
   {t:'Option A', p:'Kegon Falls', q:'Kegon Falls Nikko', n:'Bus up via Irohazaka (~45\u201360 min), then the Akechidaira Ropeway to the falls'},
   {t:'Option B', p:'Nikko town', q:'Nikko, Tochigi', n:'Alternative to the falls trip \u2014 keep exploring Nikko town instead'},
 ]},
-{d:'Fri 9 Oct', short:'9', title:'TBD', cond:'Planning in progress', stops:[]},
+{d:'Fri 9 Oct', short:'9', title:'Harajuku, Shibuya & Shinjuku', cond:'Packed day 3', stops:[
+  {t:'Morning', p:'Meiji Shrine', q:'Meiji Jingu Shrine Tokyo', n:'Go early, quiet forest walk in \u2014 the one shrine not to skip'},
+  {t:'Morning', p:'Cat Street, Harajuku', q:'Cat Street Harajuku', n:'Skip Takeshita-dori unless you want the crowds'},
+  {t:'Afternoon', p:'Shibuya Crossing', q:'Shibuya Crossing', n:'The scramble crossing'},
+  {t:'Afternoon', p:'Shibuya Sky', q:'Shibuya Sky', n:'Book the sunset slot ahead \u2014 those sell out fastest'},
+  {t:'Evening', p:'Omoide Yokocho / Golden Gai', q:'Omoide Yokocho Shinjuku', n:'Dinner and drinks in Shinjuku\u2019s yakitori alleys and tiny bars'},
+  {t:'Evening', p:'Antiknock', q:'Antiknock Shinjuku', n:'Punk show to finish the night'},
+]},
 {d:'Sat 10 Oct', short:'10', title:'Tsukiji Outer Market → Ginza', cond:'Food-forward day', stops:[
   {t:'9:00', p:'Tsukiji Outer Market', q:'Tsukiji Outer Market Tokyo', n:'Breakfast crawl — Kagari soba, Afuri ramen'},
   {t:'12:00', p:'Coffee Base Nashinoki', q:'Coffee Base Nashinoki Tokyo', n:'Coffee stop, lunch in the park'},
@@ -506,7 +513,7 @@ const FAMILY_HTML = `
 
 /* ---------- MAP page data ---------- */
 const CITIES = [
-  {key:'tokyo',     name:'Tokyo',       lat:35.6895, lng:139.6917, stay:'6–10 & 26–28 Oct', days:[3,4,5,7,8,23,24,25]},
+  {key:'tokyo',     name:'Tokyo',       lat:35.6895, lng:139.6917, stay:'6–10 & 26–28 Oct', days:[3,4,5,6,7,8,23,24,25]},
   {key:'nikko',     name:'Nikko',       lat:36.7199, lng:139.6982, stay:'Day trip · 8 Oct', days:[5]},
   {key:'hakone',    name:'Hakone',      lat:35.2323, lng:139.1069, stay:'11–12 Oct', days:[8,9]},
   {key:'kyoto',     name:'Kyoto',       lat:35.0116, lng:135.7681, stay:'12–17 Oct', days:[9,10,11,12,13,14]},
