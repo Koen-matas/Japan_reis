@@ -328,16 +328,19 @@ const DAYS = [
   {t:'Morning', p:'Meiji Shrine', q:'Meiji Jingu Shrine Tokyo', n:'Go early, quiet forest walk in \u2014 the one shrine not to skip'},
   {t:'Morning', p:'Cat Street, Harajuku', q:'Cat Street Harajuku', n:'Skip Takeshita-dori unless you want the crowds'},
   {t:'Afternoon', p:'Shibuya Crossing', q:'Shibuya Crossing', n:'The scramble crossing'},
-  {t:'Afternoon', p:'Shibuya Sky', q:'Shibuya Sky', n:'Book the sunset slot ahead \u2014 those sell out fastest', branch:{p:'Marbre Vegan', q:'Marbre Vegan Shinjuku', n:'Koen & Piek \u2014 award-winning vegan cakes near Shinjuku Gyoen. Open daily 11:00\u201319:00 (last order 18:00) \u2014 check @marbre_vegan on Instagram for occasional closures.'}},
+  {t:'Afternoon', p:'Shibuya Sky', q:'Shibuya Sky', n:'Book the sunset slot ahead \u2014 those sell out fastest', branches:[{p:'Marbre Vegan', q:'Marbre Vegan Shinjuku', n:'Koen & Piek \u2014 award-winning vegan cakes near Shinjuku Gyoen. Open daily 11:00\u201319:00 (last order 18:00) \u2014 check @marbre_vegan on Instagram for occasional closures.'}]},
   {t:'Evening', p:'Omoide Yokocho / Golden Gai', q:'Omoide Yokocho Shinjuku', n:'Dinner and drinks in Shinjuku\u2019s yakitori alleys and tiny bars'},
   {t:'Evening', p:'Antiknock', q:'Antiknock Shinjuku', n:'Punk show to finish the night'},
 ]},
 {d:'Sat 10 Oct', short:'10', title:'Food & Bay Area', cond:'Market crawl + bay views', stops:[
-  {t:'7:30\u20139:30', p:'Tsukiji Outer Market', q:'Tsukiji Outer Market Tokyo', n:'Go early to beat the Saturday crowds', branch:{p:'KOMEDA is \u25a1 Higashi-Ginza', q:'KOMEDA is Higashi-Ginza 1-13-1 Tsukiji Tokyo', n:'Koen & Piek \u2014 breakfast here, 100% plant-based menu. Morning service until 11:00, open daily 7:00\u201322:00.'}},
+  {t:'7:30\u20139:30', p:'Tsukiji Outer Market', q:'Tsukiji Outer Market Tokyo', n:'Go early to beat the Saturday crowds', branches:[{p:'KOMEDA is \u25a1 Higashi-Ginza', q:'KOMEDA is Higashi-Ginza 1-13-1 Tsukiji Tokyo', n:'Koen & Piek \u2014 breakfast here, 100% plant-based menu. Morning service until 11:00, open daily 7:00\u201322:00.'}]},
   {t:'Mid-morning', p:'Toyosu Market', q:'Toyosu Market Tokyo', n:'The modern fish market, close to Toyosu where TeamLab is too'},
   {t:'Midday', p:'teamLab Planets TOKYO', q:'teamLab Planets TOKYO', n:'Right around the corner from Toyosu Market'},
   {t:'Afternoon/Evening', p:'Odaiba', q:'Odaiba Tokyo', n:'Statue of Liberty replica, the bay boulevard, Rainbow Bridge \u2014 lovely at sunset'},
-  {t:'Evening', p:'Ginza', q:'Ginza Tokyo', n:'Dinner and the illuminated shopping streets'},
+  {t:'Evening', p:'Ginza', q:'Ginza Tokyo', n:'Dinner and the illuminated shopping streets', branches:[
+    {p:'Ain Soph.', q:'Ain Soph Ginza Tokyo', n:'Vegan restaurant \u2014 reservation needed. Lunch 11:30\u201315:00, dinner 17:00\u201321:00 (last order 20:00).'},
+    {p:'the vegan marshmallooow', q:'the vegan marshmallooow Ginza Mitsukoshi Tokyo', n:'Vegan bakery, B2F Ginza Mitsukoshi \u2014 good for a daytime stop. Open daily 10:00\u201320:00.'},
+  ]},
 ]},
 {d:'Sun 11 Oct', short:'11', title:'Tokyo → Hakone', cond:'Travel AM · sightsee PM', stops:[
   {t:'8:00', p:'Tokyo Station', q:'Tokyo Station', n:'Shinkansen + local to Hakone (1.5–2hr)'},
@@ -641,7 +644,7 @@ DAYS.forEach((day, i) => {
       <div class="cond">${day.cond}</div>
     </div>
     <ol class="timeline">
-      ${day.stops.map(st => `<li><span class="time">${st.t}</span><a class="place" target="_blank" href="${mapsLink(st.q)}">${st.p}</a><span class="note">${st.n}</span>${st.branch ? `<div class="branch"><span class="branch-tag">Optional detour</span><a class="branch-place" target="_blank" href="${mapsLink(st.branch.q)}">${st.branch.p}</a><span class="branch-note">${st.branch.n}</span></div>` : ''}</li>`).join('')}
+      ${day.stops.map(st => `<li><span class="time">${st.t}</span><a class="place" target="_blank" href="${mapsLink(st.q)}">${st.p}</a><span class="note">${st.n}</span>${(st.branches || []).map(b => `<div class="branch"><span class="branch-tag">Optional detour</span><a class="branch-place" target="_blank" href="${mapsLink(b.q)}">${b.p}</a><span class="branch-note">${b.n}</span></div>`).join('')}</li>`).join('')}
     </ol>
   `;
 });
