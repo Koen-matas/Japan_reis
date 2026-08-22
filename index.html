@@ -498,6 +498,13 @@ const BARS_HTML = `
 <div class="callout"><span class="tag">Tip</span><p>Smoking is still allowed inside many small bars across Japan — expect some smoke in the older-style spots.</p></div>
 `;
 
+/* ---------- HORLOGE WINKELS page content ---------- */
+const WATCHES_HTML = `
+<h2 class="section-title">Tokyo</h2>
+<h2 class="section-title">Osaka</h2>
+<h2 class="section-title">Kyoto</h2>
+`;
+
 /* ---------- FAMILY page content ---------- */
 const FAMILY_HTML = `
 <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.5;margin:0 0 18px 0;">Notes for whoever's joining with the 10-month-old — Japan is genuinely one of the easier countries to do this in, but a few legs of the route are worth planning around.</p>
@@ -670,6 +677,12 @@ makePill('bars', 'Bars');
 const barsSection = makeSection('bars');
 barsSection.style.setProperty('--accent', '#C4622D');
 barsSection.innerHTML = `<h1 class="hero" style="font-size:24px;">Bars & nightlife</h1>` + BARS_HTML;
+
+/* Horloge winkels tab */
+makePill('horloges', 'Horloges');
+const horlogesSection = makeSection('horloges');
+horlogesSection.style.setProperty('--accent', '#C4622D');
+horlogesSection.innerHTML = `<h1 class="hero" style="font-size:24px;">Horloge winkels</h1>` + WATCHES_HTML;
 
 /* tab switching */
 function showTab(id){
