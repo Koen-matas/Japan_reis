@@ -172,6 +172,21 @@
     border-bottom:1.5px solid var(--accent);
   }
   ol.timeline li .note{display:block; font-size:12.5px; color:var(--ink-soft); margin-top:3px; line-height:1.4;}
+  ol.timeline li .branch{
+    margin:10px 0 0 16px;
+    padding:8px 10px 8px 12px;
+    border-left:2px dashed var(--accent);
+    background:rgba(0,0,0,.025);
+    border-radius:0 8px 8px 0;
+  }
+  ol.timeline li .branch-tag{
+    display:block; font-family:var(--mono); font-size:9.5px; text-transform:uppercase;
+    letter-spacing:.06em; color:var(--accent); font-weight:700; margin-bottom:2px;
+  }
+  ol.timeline li .branch-place{
+    font-weight:700; font-size:13.5px; text-decoration:none; border-bottom:1.5px solid var(--accent);
+  }
+  ol.timeline li .branch-note{display:block; font-size:12px; color:var(--ink-soft); margin-top:2px; line-height:1.4;}
   .callout{
     margin-top:16px;
     border-left:3px solid var(--accent);
@@ -313,8 +328,7 @@ const DAYS = [
   {t:'Morning', p:'Meiji Shrine', q:'Meiji Jingu Shrine Tokyo', n:'Go early, quiet forest walk in \u2014 the one shrine not to skip'},
   {t:'Morning', p:'Cat Street, Harajuku', q:'Cat Street Harajuku', n:'Skip Takeshita-dori unless you want the crowds'},
   {t:'Afternoon', p:'Shibuya Crossing', q:'Shibuya Crossing', n:'The scramble crossing'},
-  {t:'Afternoon', p:'Shibuya Sky', q:'Shibuya Sky', n:'Book the sunset slot ahead \u2014 those sell out fastest'},
-  {t:'Afternoon/Evening', p:'Marbre Vegan', q:'Marbre Vegan Shinjuku', n:'Koen & Piek \u2014 award-winning vegan cakes near Shinjuku Gyoen, before or after Shibuya Sky'},
+  {t:'Afternoon', p:'Shibuya Sky', q:'Shibuya Sky', n:'Book the sunset slot ahead \u2014 those sell out fastest', branch:{p:'Marbre Vegan', q:'Marbre Vegan Shinjuku', n:'Koen & Piek \u2014 award-winning vegan cakes near Shinjuku Gyoen. Open daily 11:00\u201319:00 (last order 18:00) \u2014 check @marbre_vegan on Instagram for occasional closures.'}},
   {t:'Evening', p:'Omoide Yokocho / Golden Gai', q:'Omoide Yokocho Shinjuku', n:'Dinner and drinks in Shinjuku\u2019s yakitori alleys and tiny bars'},
   {t:'Evening', p:'Antiknock', q:'Antiknock Shinjuku', n:'Punk show to finish the night'},
 ]},
@@ -475,12 +489,6 @@ const BARS_HTML = `
 <div class="callout"><span class="tag">Tip</span><p>Smoking is still allowed inside many small bars across Japan — expect some smoke in the older-style spots.</p></div>
 `;
 
-/* ---------- ETEN page content ---------- */
-const ETEN_HTML = `
-<h2 class="section-title">Tokyo</h2>
-<div class="place-card"><a class="name" target="_blank" href="${mapsLink('Marbre Vegan Shinjuku')}">Marbre Vegan</a><span class="area">Shinjuku</span><span class="desc">Award-winning 100% vegan cake cafe near Shinjuku Gyoen. Open daily 11:00–19:00 (last order 18:00) — check @marbre_vegan on Instagram for occasional closures. Best fit: 9 Oct, before or after Shibuya Sky (Koen &amp; Piek).</span></div>
-`;
-
 /* ---------- FAMILY page content ---------- */
 const FAMILY_HTML = `
 <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.5;margin:0 0 18px 0;">Notes for whoever's joining with the 10-month-old — Japan is genuinely one of the easier countries to do this in, but a few legs of the route are worth planning around.</p>
@@ -633,7 +641,7 @@ DAYS.forEach((day, i) => {
       <div class="cond">${day.cond}</div>
     </div>
     <ol class="timeline">
-      ${day.stops.map(st => `<li><span class="time">${st.t}</span><a class="place" target="_blank" href="${mapsLink(st.q)}">${st.p}</a><span class="note">${st.n}</span></li>`).join('')}
+      ${day.stops.map(st => `<li><span class="time">${st.t}</span><a class="place" target="_blank" href="${mapsLink(st.q)}">${st.p}</a><span class="note">${st.n}</span>${st.branch ? `<div class="branch"><span class="branch-tag">Optional detour</span><a class="branch-place" target="_blank" href="${mapsLink(st.branch.q)}">${st.branch.p}</a><span class="branch-note">${st.branch.n}</span></div>` : ''}</li>`).join('')}
     </ol>
   `;
 });
@@ -647,12 +655,6 @@ infoSection.innerHTML = `<h1 class="hero" style="font-size:24px;">Practical info
 makePill('family', 'Family');
 const familySection = makeSection('family');
 familySection.innerHTML = `<h1 class="hero" style="font-size:24px;">Travelling with a baby</h1>` + FAMILY_HTML;
-
-/* Eten tab */
-makePill('eten', 'Eten');
-const etenSection = makeSection('eten');
-etenSection.style.setProperty('--accent', '#C4622D');
-etenSection.innerHTML = `<h1 class="hero" style="font-size:24px;">Eten</h1>` + ETEN_HTML;
 
 /* Bars tab */
 makePill('bars', 'Bars');
