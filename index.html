@@ -475,6 +475,12 @@ const BARS_HTML = `
 <div class="callout"><span class="tag">Tip</span><p>Smoking is still allowed inside many small bars across Japan — expect some smoke in the older-style spots.</p></div>
 `;
 
+/* ---------- ETEN page content ---------- */
+const ETEN_HTML = `
+<h2 class="section-title">Tokyo</h2>
+<div class="place-card"><a class="name" target="_blank" href="${mapsLink('Marbre Vegan Shinjuku')}">Marbre Vegan</a><span class="area">Shinjuku</span><span class="desc">Award-winning 100% vegan cake cafe near Shinjuku Gyoen. Open daily 11:00–19:00 (last order 18:00) — check @marbre_vegan on Instagram for occasional closures. Best fit: 9 Oct, before or after Shibuya Sky (Koen &amp; Piek).</span></div>
+`;
+
 /* ---------- FAMILY page content ---------- */
 const FAMILY_HTML = `
 <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.5;margin:0 0 18px 0;">Notes for whoever's joining with the 10-month-old — Japan is genuinely one of the easier countries to do this in, but a few legs of the route are worth planning around.</p>
@@ -641,6 +647,12 @@ infoSection.innerHTML = `<h1 class="hero" style="font-size:24px;">Practical info
 makePill('family', 'Family');
 const familySection = makeSection('family');
 familySection.innerHTML = `<h1 class="hero" style="font-size:24px;">Travelling with a baby</h1>` + FAMILY_HTML;
+
+/* Eten tab */
+makePill('eten', 'Eten');
+const etenSection = makeSection('eten');
+etenSection.style.setProperty('--accent', '#C4622D');
+etenSection.innerHTML = `<h1 class="hero" style="font-size:24px;">Eten</h1>` + ETEN_HTML;
 
 /* Bars tab */
 makePill('bars', 'Bars');
