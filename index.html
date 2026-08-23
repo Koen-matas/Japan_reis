@@ -266,7 +266,7 @@ function accentFor(i,total){ return 'hsl(' + Math.round((i*360/total)) + ' 62% 4
 /* ---------- trip-wide data ---------- */
 const BOOKINGS = [
   {k:'Flight out (EK146 + EK312)', v:'Amsterdam → Dubai → Tokyo Haneda', sub:'Sun 4 Oct, 11:25 AMS → Tue 6 Oct, 22:20 HND · ref: JBYDQB'},
-  {k:'Hotel — Tokyo (Yanaka)', v:'Yanaka base, 6–10 & 26–28 Oct', sub:'Address & confirmation: ask me'},
+  {k:'Hotel — Tokyo (Yanaka)', v:'Hiro Yanaka Hostel TT0421', sub:'Yanaka base, 6–10 & 26–28 Oct · exact confirmation details: ask me'},
   {k:'Flight home (EK313 + EK147)', v:'Tokyo Haneda → Dubai → Amsterdam', sub:'Departs Haneda Wed 28 Oct · arrives Amsterdam Thu 29 Oct · ref: JBYDQB · exact times TBC'},
 ];
 
@@ -305,10 +305,11 @@ const DAYS = [
 {d:'Tue 6 Oct', short:'6', title:'Dubai → Tokyo Haneda', cond:'Arrival — late landing', stops:[
   {t:'—', p:'Dubai Airport', q:'Dubai International Airport', n:'Depart for Tokyo'},
   {t:'22:20', p:'Tokyo Haneda Airport', q:'Haneda Airport', n:'Landing — immigration, luggage, IC card'},
-  {t:'late', p:'Hotel in Yanaka', q:'Yanaka, Tokyo', n:'Taxi or last train — straight to bed, no plans tonight'},
+  {t:'late', p:'Hiro Yanaka Hostel TT0421', q:'Yanaka, Tokyo', n:'Taxi or last train — straight to bed, no plans tonight'},
 ]},
 {d:'Wed 7 Oct', short:'7', title:'East Tokyo — Yanaka, Ueno, Asakusa, Akihabara', cond:'Packed day 1', stops:[
-  {t:'Morning', p:'Yanaka Ginza', q:'Yanaka Ginza, Tokyo', n:'Easy start from the hotel — stroll to this charming old-school shopping street'},
+  {t:'AM', p:'Hiro Yanaka Hostel TT0421', q:'Yanaka, Tokyo', n:'Base for these days — start the morning from here'},
+  {t:'Morning', p:'Yanaka Ginza', q:'Yanaka Ginza, Tokyo', n:'Easy walk from the hostel — stroll to this charming old-school shopping street'},
   {t:'Morning', p:'Nezu Shrine', q:'Nezu Shrine Tokyo', n:'One of Tokyo\u2019s prettier, quieter shrines — known for its tunnel of red torii gates'},
   {t:'Afternoon', p:'Ueno Park', q:'Ueno Park, Tokyo', n:'Walk on to Shinobazu Pond'},
   {t:'Afternoon', p:'Ueno Toshogu Shrine', q:'Ueno Toshogu Shrine Tokyo', n:'Optional — small but beautiful, known for its gold facade and peony garden'},
@@ -320,6 +321,7 @@ const DAYS = [
   ]},
 ]},
 {d:'Thu 8 Oct', short:'8', title:'Day trip — Nikko', cond:'Full day out of Tokyo · Spacia X recommended', stops:[
+  {t:'AM', p:'Hiro Yanaka Hostel TT0421', q:'Yanaka, Tokyo', n:'Head out from the hostel toward Asakusa Station'},
   {t:'Morning', p:'Asakusa Station', q:'Asakusa Station Tokyo', n:'Board the train to Tobu-Nikko — the Spacia X limited express is worth it'},
   {t:'~8:30\u20139:00', p:'Tobu-Nikko Station', q:'Tobu Nikko Station', n:'Arrival in Nikko'},
   {t:'\u2014', p:'Shinkyo Bridge', q:'Shinkyo Bridge Nikko', n:'23 min walk from the station'},
@@ -329,6 +331,7 @@ const DAYS = [
   {t:'Option B', p:'Nikko town', q:'Nikko, Tochigi', n:'Alternative to the falls trip \u2014 keep exploring Nikko town instead'},
 ]},
 {d:'Fri 9 Oct', short:'9', title:'Harajuku, Shibuya & Shinjuku', cond:'Packed day 3', stops:[
+  {t:'AM', p:'Hiro Yanaka Hostel TT0421', q:'Yanaka, Tokyo', n:'Head out from the hostel toward Meiji Shrine'},
   {t:'Morning', p:'Meiji Shrine', q:'Meiji Jingu Shrine Tokyo', n:'Go early, quiet forest walk in \u2014 the one shrine not to skip'},
   {t:'Morning', p:'Cat Street, Harajuku', q:'Cat Street Harajuku', n:'Skip Takeshita-dori unless you want the crowds'},
   {t:'Afternoon', p:'Shibuya Crossing', q:'Shibuya Crossing', n:'The scramble crossing'},
@@ -339,6 +342,7 @@ const DAYS = [
   {t:'Evening', p:'Antiknock', q:'Antiknock Shinjuku', n:'Punk show to finish the night'},
 ]},
 {d:'Sat 10 Oct', short:'10', title:'Food & Bay Area', cond:'Market crawl + bay views', stops:[
+  {t:'Early', p:'Hiro Yanaka Hostel TT0421', q:'Yanaka, Tokyo', n:'Early start from the hostel toward Tsukiji'},
   {t:'7:30\u20139:30', p:'Tsukiji Outer Market', q:'Tsukiji Outer Market Tokyo', n:'Go early to beat the Saturday crowds', branches:[{p:'KOMEDA is \u25a1 Higashi-Ginza', q:'KOMEDA is Higashi-Ginza 1-13-1 Tsukiji Tokyo', n:'Koen & Piek \u2014 breakfast here, 100% plant-based menu. Morning service until 11:00, open daily 7:00\u201322:00.'}]},
   {t:'Mid-morning', p:'Toyosu Market', q:'Toyosu Market Tokyo', n:'The modern fish market, close to Toyosu where TeamLab is too'},
   {t:'Midday', p:'teamLab Planets TOKYO', q:'teamLab Planets TOKYO', n:'Right around the corner from Toyosu Market'},
